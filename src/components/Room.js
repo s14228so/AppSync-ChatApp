@@ -63,7 +63,6 @@ export default ({ room }) => {
 
   return (
     <div>
-
       <Chat>
         <ChatBox>
 
@@ -76,9 +75,10 @@ export default ({ room }) => {
               })}
             </div>
           </ChatHistoryWrapper>
+          <AddMessage room={roomData} />
         </ChatBox>
+
       </Chat>
-      <AddMessage room={roomData} />
     </div>
   )
 }

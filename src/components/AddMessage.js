@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from "styled-components"
-import { FormControl, InputLabel, Input, FormHelperText, } from '@material-ui/core';
 import { createMessage } from "../graphql/mutations"
 import { API, graphqlOperation } from 'aws-amplify'
 
 import { UserContext } from "../App"
 window.LOG_LEVEL = 'VERBOSE';
 
-const AddMessage = ({ room }) => {
+export default ({ room }) => {
   const [message, setMessage] = useState("")
   const username = useContext(UserContext)
 
@@ -26,30 +25,49 @@ const AddMessage = ({ room }) => {
   }
 
   return (
-    <Wrapper>
-      <Form>
-        <InputLabel htmlFor="my-input">Chat</InputLabel>
-        <Input id="my-input" aria-describedby="my-helper-text"
-          onChange={e => setMessage(e.target.value)}
-          value={message}
+    <ChatInputWrapper>
 
+      <Form>
+        <ChatInput
+          className='chat-input'
+          placeholder='Send...'
+          value={message}
+          onChange={e => setMessage(e.target.value)}
           onKeyPress={e => e.key === "Enter" ? enter(e, message) && setMessage("") : null}
         />
-        <FormHelperText id="my-helper-text">Type Chat Message</FormHelperText>
       </Form>
-    </Wrapper>
+    </ChatInputWrapper>
+
+    // <Form>
+    //   <InputLabel htmlFor="my-input">Chat</InputLabel>
+    //   <Input id="my-input" aria-describedby="my-helper-text"
+    //     onChange={e => setMessage(e.target.value)}
+    //     value={message}
+
+    //     
+    //   />
+    //   <FormHelperText id="my-helper-text">Type Chat Message</FormHelperText>
+    // </Form>
   )
 }
 
 
-const Wrapper = styled.div`
-    margin: 20px 0px;
+const ChatInputWrapper = styled.div`
+   display: flex;
+   margin-top: auto;
   `
 
-const Form = styled(FormControl)`
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  `
 
-export default AddMessage;
+const Form = styled.form`
+display: flex;
+flex: 1 1 auto;
+`
+
+const ChatInput = styled.input`
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  flex: 1 1 auto;
+  outline: none;
+`
