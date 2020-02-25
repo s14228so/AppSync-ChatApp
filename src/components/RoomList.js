@@ -6,7 +6,7 @@ import { listRooms } from "../graphql/queries";
 import { UserContext } from "../App";
 
 import styled, { css } from "styled-components"
-import CircularProgess from "./CircularProgress"
+import CircularProgess from "./atoms/CircularProgress"
 
 export default ({ changeRoom }) => {
   const username = useContext(UserContext);
@@ -51,8 +51,21 @@ const RoomElement = styled.div`
 width: 150px;
 cursor: pointer;
 margin-top: 20px;
+padding: 5px 3px;
+border-radius: 8px;
+text-align:center;
+background: #fff;
+box-shadow: 4px 4px;
+&:active{
+  box-shadow: 0px 0px;
+  padding-top: 6px;
+  margin-left: 1px;
+}
 ${props => props.isActive ? css`
-  border-right: 2px solid #c51162;
+box-shadow: 0px 0px;
+color: grey;
+font-weight: bold;
 ` : css`
+
 `}
 `

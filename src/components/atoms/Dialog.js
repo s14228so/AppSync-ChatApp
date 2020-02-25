@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Storage, Auth, API, graphqlOperation } from 'aws-amplify';
-import { createRoom } from '../graphql/mutations';
+import { createRoom } from '../../graphql/mutations';
 
 export default function FormDialog({ isOpen, changeDialog }) {
   const [roomName, setRoomName] = useState("")

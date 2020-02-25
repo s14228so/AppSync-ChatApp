@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-import { UserContext } from "../App"
+import { UserContext } from "../../App"
 import { Auth } from "aws-amplify"
 
 const useStyles = makeStyles(theme => ({

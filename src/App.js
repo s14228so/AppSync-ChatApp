@@ -4,12 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import "./App.css"
 import { Authenticator, Loading } from 'aws-amplify-react'; // 認証系のコンポーネント
 import { Grid } from '@material-ui/core';
-import AppBar from "./components/AppBar"
+import AppBar from "./components/layouts/AppBar"
 import MyRoomList from "./components/RoomList"
 import CurrentRoom from "./components/Room"
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import Dialog from "./components/Dialog"
+import Dialog from "./components/atoms/Dialog"
 
 export const UserContext = createContext()
 
