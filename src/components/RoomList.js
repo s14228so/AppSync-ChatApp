@@ -1,15 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { graphqlOperation } from "aws-amplify";
 import { Connect } from "aws-amplify-react";
 import { listRooms } from "../graphql/queries";
 import { UserContext } from "../App";
-
-
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box'
+import styled, { css } from "styled-components"
 
 export default ({ changeRoom }) => {
   const username = useContext(UserContext);
+  const [selectedRoom, setRoom] = useState(null)
   const handleChangeRoom = (room) => {
+    setRoom(room)
     changeRoom(room)
   }
   // Connectコンポーネントを使うとdata, loading, errorsを関数の引数で受け取って使える。
@@ -25,11 +30,31 @@ export default ({ changeRoom }) => {
             ルーム一覧
             </h2>
           {data.listRooms.items.map(room => (
-            <div key={room.id} className="my-2">
-              <button onClick={() => handleChangeRoom(room)}>{room.name}</button>
-            </div>))}
+            <RoomElement key={room.id} isActive={selectedRoom?.id === room.id}>
+              <div onClick={() => handleChangeRoom(room)}>{room.name}</div>
+            </RoomElement>))}
         </>)
       }}
     </Connect >
   )
 }
+
+styled.div`
+  ${props => props.active ? css`
+    color: white;
+    background: red;
+  ` : css`
+    color: black;
+    background: gray;
+  `}
+`
+
+const RoomElement = styled.div`
+width: 150px;
+cursor: pointer;
+margin-top: 20px;
+${props => props.isActive ? css`
+  border-right: 2px solid #c51162;
+` : css`
+`}
+`
