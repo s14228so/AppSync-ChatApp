@@ -26,9 +26,9 @@ export default ({ changeRoom }) => {
         if (errors.length > 0) return <div>{errors.length}</div>
         if (loading || !data.listRooms) return <div>loading...</div>
         return (data && <>
-          <h2 className="header">
-            ルーム一覧
-            </h2>
+          <h3 className="header">
+            参加してるルーム
+            </h3>
           {data.listRooms.items.map(room => (
             <RoomElement key={room.id} isActive={selectedRoom?.id === room.id}>
               <div onClick={() => handleChangeRoom(room)}>{room.name}</div>
