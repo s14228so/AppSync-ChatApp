@@ -10,8 +10,6 @@ import { UserContext } from "../App";
 export default ({ changeRoom }) => {
   const username = useContext(UserContext);
   const handleChangeRoom = (room) => {
-    console.log(room)
-
     changeRoom(room)
   }
   // Connectコンポーネントを使うとdata, loading, errorsを関数の引数で受け取って使える。
