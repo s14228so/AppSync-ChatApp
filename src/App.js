@@ -10,7 +10,7 @@ import CurrentRoom from "./components/Room"
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from "./components/atoms/Dialog"
-
+import SnackBar from "./components/atoms/SnackBar"
 export const UserContext = createContext()
 
 const useStyles = makeStyles(theme => ({
@@ -45,12 +45,12 @@ const App = () => {
   const classes = useStyles();
   const [username, setUserName] = useState("")
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const [room, setRoom] = useState({ messages: [] });
 
   const changeDialog = () => {
     setOpen(!open);
   };
-
 
   const showDialog = () => {
     changeDialog()
@@ -71,20 +71,31 @@ const App = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               {room.name && <CurrentRoom room={room} />}
-
             </Grid>
+            <Fab color="secondary" aria-label="add" className={classes.fabButton} onClick={showDialog}>
+              <AddIcon />
+            </Fab>
           </>
         ) : <Authenticator onStateChange={(_, user) => {
-          user ? setUserName(user.username) : setUserName("")
+          console.log({ user })
+          if (user) {
+            setUserName(user.username)
+            setMessage("ログインしました")
+            setTimeout(() => {
+              setMessage("")
+            }, 1000)
+          } else {
+            setUserName("")
+          }
         }} >
             <Loading />
           </Authenticator>
         }
       </Grid>
-      <Fab color="secondary" aria-label="add" className={classes.fabButton} onClick={showDialog}>
-        <AddIcon />
-      </Fab>
+
       <Dialog isOpen={open} changeDialog={changeDialog} />
+      {message && <SnackBar message={message} />}
+
     </UserContext.Provider >
 
   )
