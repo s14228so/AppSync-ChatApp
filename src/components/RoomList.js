@@ -4,11 +4,9 @@ import { graphqlOperation } from "aws-amplify";
 import { Connect } from "aws-amplify-react";
 import { listRooms } from "../graphql/queries";
 import { UserContext } from "../App";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box'
+
 import styled, { css } from "styled-components"
+import CircularProgess from "./CircularProgress"
 
 export default ({ changeRoom }) => {
   const username = useContext(UserContext);
@@ -24,7 +22,7 @@ export default ({ changeRoom }) => {
     >
       {({ data, loading, errors }) => {
         if (errors.length > 0) return <div>{errors.length}</div>
-        if (loading || !data.listRooms) return <div>loading...</div>
+        if (loading || !data.listRooms) return <CircularProgess />
         return (data && <>
           <h3 className="header">
             参加してるルーム
