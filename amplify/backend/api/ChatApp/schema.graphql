@@ -9,3 +9,16 @@ type Message @model {
   room: Room @connection(name: "RoomMessage")
   username: String!
 }
+
+type User @model {
+  id: ID!
+  username: String!
+  image: S3Object! ## Map型
+  email: String!
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
