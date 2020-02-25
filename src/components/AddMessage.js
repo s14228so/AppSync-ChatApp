@@ -10,7 +10,8 @@ export default ({ room }) => {
   const [message, setMessage] = useState("")
   const username = useContext(UserContext)
 
-  const enter = async () => {
+  const enter = async (e) => {
+    e.preventDefault()
     const input = {
       messageRoomId: room.id,
       title: message,

@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from "../App"
 import Message from "./Message"
 import styled from "styled-components"
+import { useSubscription } from '../hooks/useSubscription'
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,24 +38,26 @@ const getRoom = `query getRoom($id: ID!) {
 export default ({ room }) => {
 
   const [roomData, setRoomData] = useState({})
-  const [messages, setMessages] = useState([])
   const messagesEndRef = useRef(null)
   const username = useContext(UserContext)
   const classes = useStyles();
+  console.log(room.name)
+  const newMessages = useSubscription(room)
+  console.log(newMessages)
 
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView(false, { behavior: "smooth" })
   }
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [newMessages]);
+
 
   useEffect(() => {
     const fetchRoomData = async () => {
       const input = { id: room.id };
       const res = await API.graphql(graphqlOperation(getRoom, input));
       setRoomData(res.data.getRoom)
-      setMessages(res.data.getRoom.messages.items)
     }
     fetchRoomData()
 
@@ -68,7 +71,7 @@ export default ({ room }) => {
 
           <ChatHistoryWrapper>
             <div className={classes.chatHistory} ref={messagesEndRef}>
-              {messages && messages.map(msg => {
+              {newMessages && newMessages.map(msg => {
                 return (
                   <Message key={msg.id} isOwner={msg.username === username}>{msg.title}</Message>
                 )
