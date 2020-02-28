@@ -19,13 +19,9 @@ export function useSubscription(room) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-
     async function fetchData() {
       const res = await API.graphql(graphqlOperation(listMessages))
       const messages = res.data.listMessages.items.filter(msg => {
-
-        console.log("room:", room.name, room.id)
-        console.log("message", msg.room.id)
         return msg.room.id === room.id
       })
 

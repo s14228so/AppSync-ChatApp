@@ -4,9 +4,9 @@ import { graphqlOperation } from "aws-amplify";
 import { Connect } from "aws-amplify-react";
 import { listRooms } from "../graphql/queries";
 import { UserContext } from "../App";
-
 import styled, { css } from "styled-components"
 import CircularProgess from "./atoms/CircularProgress"
+import { onCreateRoom } from "../graphql/subscriptions"
 
 export default ({ changeRoom }) => {
   const username = useContext(UserContext);
@@ -15,10 +15,24 @@ export default ({ changeRoom }) => {
     setRoom(room)
     changeRoom(room)
   }
+
+  const onNewRoom = (prevQuery, newData) => {
+    let updatedQuery = { ...prevQuery }
+    const updatedRoomList = [
+      newData.onCreateRoom,
+      ...prevQuery.listRooms.items
+    ];
+
+    console.log(updatedQuery)
+    updatedQuery.listRooms.items = updatedRoomList;
+    return updatedQuery;
+  }
   // Connectコンポーネントを使うとdata, loading, errorsを関数の引数で受け取って使える。
   return (
     <Connect
       query={graphqlOperation(listRooms)}
+      subscription={graphqlOperation(onCreateRoom, { owner: username })}
+      onSubscriptionMsg={onNewRoom}
     >
       {({ data, loading, errors }) => {
         if (errors.length > 0) return <div>{errors.length}</div>

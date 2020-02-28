@@ -92,12 +92,9 @@ const App = () => {
           </Authenticator>
         }
       </Grid>
-
       <Dialog isOpen={open} changeDialog={changeDialog} />
       {message && <SnackBar message={message} />}
-
     </UserContext.Provider >
-
   )
 }
 

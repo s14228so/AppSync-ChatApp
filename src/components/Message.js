@@ -19,17 +19,24 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const ChatMessage = ({ children, isOwner }) => {
+export default ({ children, isOwner, msg }) => {
   const classes = useStyles();
+  console.log({ msg })
 
   return isOwner
     ? (
-      <div className={classes.chatMessage + " " + classes.isOwner}> {children}</div >
+      <div className={classes.isOwner}>
+        {msg.username}
+        <div className={classes.chatMessage}>
+          {children}</div>
+      </div>
+
     )
     : (
-      <div className={classes.chatMessage + " " + classes.notOwner}>{children}</div>
+      <div className={classes.isOwner}>
+        {msg.username}
+        <div className={classes.chatMessage}>{children}</div>
+      </div>
     )
 }
 
-
-export default ChatMessage

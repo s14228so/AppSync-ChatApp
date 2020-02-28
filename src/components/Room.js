@@ -73,7 +73,7 @@ export default ({ room }) => {
             <div className={classes.chatHistory} ref={messagesEndRef}>
               {newMessages && newMessages.map(msg => {
                 return (
-                  <Message key={msg.id} isOwner={msg.username === username}>{msg.title}</Message>
+                  <Message key={msg.id} msg={msg} isOwner={msg.username === username}>{msg.title}</Message>
                 )
               })}
             </div>
@@ -106,13 +106,14 @@ const ChatHistoryWrapper = styled.div`
     width: 100%;
     position: relative;
     `
-
+//user: null
 
 // user: {
 //   room: {
 //     messages: []
 //   }
 // }
+
 
 
 
